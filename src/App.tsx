@@ -1,14 +1,14 @@
-import TicketTable from "./Dashboard/TicketTable";
-
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import TicketDetailsPage from "./pages/TicketDetailsPage";
 export default function App() {
   return (
-    <div>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-7xl p-8">
-          <h1 className="text-2xl font-bold mb-6">Task Manager</h1>
-          <TicketTable />
-        </div>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} /> {/* Main Ticket Table */}
+        <Route path="/tickets/:ticketId" element={<TicketDetailsPage/>} />{" "}
+        {/* Ticket Details Page */}
+      </Routes>
+    </Router>
   );
 }
