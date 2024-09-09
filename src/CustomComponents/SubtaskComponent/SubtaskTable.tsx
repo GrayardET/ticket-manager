@@ -1,47 +1,20 @@
 import { Table, TableBody } from "@/components/ui/table"; // Shadcn Table
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import ProgressBar from "../ProgressBar"; // Custom progress bar
 import { Ticket } from "../TicketComponent/TicketTable";
 import SubtaskRow from "./SubtaskRow";
 
 interface SubtaskTableProps {
-  ticketId: string;
+  ticket: Ticket;
+  setTicket: React.Dispatch<React.SetStateAction<Ticket | null>>;
 }
-const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticketId }) => {
-  const [ticket, setTicket] = useState<Ticket | null>(null);
+const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const getTicket = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/tickets/${ticketId}`
-        );
-        console.log(response.data);
-        setTicket(response.data);
-      } catch (err) {
-        setError("Failed to fetch ticket: " + error);
-      }
-    };
-    getTicket();
-  }, []);
 
   if (error) {
     return <div>{error}</div>;
   }
-
-  // Delete current ticket
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`);
-      // redirect to home page
-      navigate("/");
-    } catch (error) {
-      setError("Failed to delete ticket: " + error);
-    }
-  };
 
   // Delete subtickets (subtasks)
   const handleSubticketsDelete = async (id: string) => {
@@ -86,7 +59,7 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticketId }) => {
 
   return (
     <div className="w-1/2 rounded-md shadow-sm bg-white">
-      <div className="px-2 py-2 mb-3 border-b-[1.2px] border-gray-300 font-bold">
+      <div className="px-4 py-3 mb-3 border-b-[1.2px] border-gray-300 font-bold">
         Subtasks
       </div>
       <div className="py-2 px-4">
