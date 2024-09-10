@@ -11,7 +11,7 @@ const SubtaskDeletion: React.FC<SubtaskDeletionPros> = ({
   handleDelete,
 }) => {
   return (
-    <div className="w-full min-w-[400px] rounded-md shadow-md bg-white h-full">
+    <div className="w-3/5 min-w-[400px] rounded-md shadow-md bg-white h-full">
       <div className="py-4 px-6">
         <div className="pt-1 py-3 mb-3 border-b-[1.2px] border-gray-200 font-bold">
           Delete your Task
