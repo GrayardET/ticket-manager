@@ -39,12 +39,8 @@ const TicketRow: React.FC<TicketRowProps> = ({
       <td className="py-2 px-4 min-w-[200px] truncate flex items-center">
         {ticketName}
       </td>
-      <td className="pr-12 pl-4 flex items-center min-w-[180px]">
-        <div className="bg-gray-200 h-2 w-full ">
-          {/* <div
-            className="bg-green-500 h-full rounded-sm"
-            style={{ width: `${progress}%` }}
-          ></div> */}
+      <td className="pr-12 pl-4 flex items-center min-w-[200px]">
+        <div className="bg-gray-200 h-2 w-full mr-">
           <ProgressBar parentTicketStatus={status} tickets={subtickets} />
         </div>
       </td>

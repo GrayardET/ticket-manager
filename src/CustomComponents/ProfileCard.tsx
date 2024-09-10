@@ -6,6 +6,9 @@ interface ProfileCardProps {
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ employee }) => {
+  if (!employee) {
+    return <div className="text-gray-500 text-sm">No Employee Found</div>;
+  }
   return (
     <div className="w-full rounded-sm flex items-center space-x-3 hover:bg-neutral-100">
       <img

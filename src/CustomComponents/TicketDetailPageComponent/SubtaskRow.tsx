@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select"; //
 import { TableCell, TableRow } from "@/components/ui/table";
 import React from "react";
+import toast from "react-hot-toast";
 import { IoTrashOutline } from "react-icons/io5";
 import { Ticket } from "../TicketComponent/TicketTable";
 
@@ -57,7 +58,12 @@ const SubtaskRow: React.FC<SubtaskRowProps> = ({
         </Select>
       </TableCell>
       <TableCell className="max-w-8 pr-0 item-end">
-        <button onClick={() => onDelete(subtask._id)}>
+        <button
+          onClick={() => {
+            onDelete(subtask._id);
+            toast.success("Subtask deleted successfully!");
+          }}
+        >
           <IoTrashOutline className="w-5 h-5 text-red-500 hover:cursor-pointer" />
         </button>
       </TableCell>

@@ -53,7 +53,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   return (
     <div className="relative">
       <div
-        className={`flex flex-wrap items-center border border-gray-300 bg-white min-h-[42px] w-[300px] shadow-sm rounded-sm p-2 gap-1 cursor-text ${
+        className={`flex flex-wrap items-center border border-gray-300 bg-white min-h-[42px] w-[200px] shadow-sm rounded-sm p-2 gap-1 cursor-text ${
           isOpen ? "ring-blue ring-2" : ""
         }`}
         ref={selectRef}

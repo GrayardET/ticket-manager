@@ -5,15 +5,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // Shadcn Select
-import { Textarea } from "@/components/ui/textarea"; // Shadcn Textarea
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useModalState } from "@/hooks/store";
-import axios from "axios"; // For fetching employees
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AiOutlineClose } from "react-icons/ai";
 import { Employee } from "./TicketComponent/TicketTable";
-
+const BACKEND_URL = import.meta.env.VITE_TASK_MANAGER_BACKEND_URL;
 interface ModalProps {
   disabled?: boolean;
 }
@@ -37,13 +38,19 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
     formState: { errors },
   } = useForm<FormData>();
 
+  // Initialize value for the Form
+  setValue("assignedTo", ["66e06f48dcadba975016eabd"]);
+  setValue("status", "Pending");
+  setValue("type", "Task");
+
   const [employees, setEmployees] = useState<Employee[]>([]); // State for storing employee data
 
+  console.log("Backend URL ", BACKEND_URL);
   useEffect(() => {
     // Fetch employees for the "Assigned To" field
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/employees");
+        const response = await axios.get(`${BACKEND_URL}/api/employees`);
         console.log("Employees", response.data);
         setEmployees(response.data);
       } catch (error) {
@@ -60,13 +67,48 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
     }
   };
 
-  const onSubmit = async (data: FormData) => {
+  const validateForm = (data: FormData) => {
+    // Check each field, if missing show a toast notification
+    if (!data.ticketNumber) {
+      console.log("missing ticket Number");
+      return false;
+    }
+    if (!data.ticketName) {
+      console.log("missing ticket Name");
+      return false;
+    }
+    if (!data.description) {
+      console.log("missing ticket Description");
+      return false;
+    }
+    if (!data.assignedTo) {
+      console.log("missing assignedTo");
+      return false;
+    }
+    if (!data.status) {
+      console.log("missing status");
+      return false;
+    }
+    if (!data.type) {
+      console.log("missing type");
+      return false;
+    }
+    return true;
+  };
 
+  const onSubmit = async (data: FormData) => {
+    const isValid = validateForm(data);
+    if (!isValid) {
+      return;
+    }
     try {
-      await axios.post("http://localhost:3000/api/tickets", data);
+      await axios.post(`${BACKEND_URL}/api/tickets`, data);
+      window.location.reload();
       toggleModal();
+      toast.success("Ticket created successfully!");
     } catch (error) {
       console.error("Failed to create ticket", error);
+      toast.error("Failed to create ticket");
     }
   };
 
@@ -75,7 +117,7 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
       return;
     }
 
-    onSubmit(data); // Submit form data to the parent function
+    onSubmit(data); // Call the onSubmit function
   };
 
   if (!isOpen) {
@@ -111,7 +153,7 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
               {/* Ticket number field */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Ticket Name
+                  Ticket Number
                 </label>
                 <Input
                   type="text"
@@ -125,7 +167,7 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
                   </p>
                 )}
               </div>
-              
+
               {/* Ticket Name Field */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">

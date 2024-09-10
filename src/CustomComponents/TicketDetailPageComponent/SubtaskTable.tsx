@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ProgressBar from "../ProgressBar"; // Custom progress bar
 import { Ticket } from "../TicketComponent/TicketTable";
 import SubtaskRow from "./SubtaskRow";
+const BACKEND_URL = import.meta.env.VITE_TASK_MANAGER_BACKEND_URL;
 
 interface SubtaskTableProps {
   ticket: Ticket;
@@ -18,7 +19,7 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
 
   const handleSubticketsDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/api/tickets/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/tickets/${id}`);
       setTicket((prevTicket) => {
         if (prevTicket) {
           const updatedSubtasks = prevTicket.subtickets.filter(
@@ -36,7 +37,7 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
   // change subticket status
   const handleStatusChange = async (id: string, status: string) => {
     try {
-      await axios.put(`http://localhost:3000/api/tickets/${id}/status`, {
+      await axios.put(`${BACKEND_URL}/api/tickets/${id}/status`, {
         status,
       });
 
@@ -61,7 +62,7 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
     ticket.subtickets.length === 0
   ) {
     return (
-      <div className="w-2/5 rounded-md bg-white flex justify-center items-center">
+      <div className="w-2/5 min-w-[250px] rounded-md bg-neutral-200 flex justify-center items-center font-semibold">
         No Subtask Found
       </div>
     );

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import React from "react";
 import ProfileCard from "../ProfileCard";
 import { Ticket } from "../TicketComponent/TicketTable";
+import { format } from "date-fns";
 
 interface SubtaskInfoProps {
   ticket: Ticket;
@@ -12,10 +13,10 @@ const SubtaskInfo: React.FC<SubtaskInfoProps> = ({ ticket }) => {
   return (
     <div className="w-2/5 p-6 min-w-[300px] shadow-md rounded-md bg-white">
       {/* Ticket Header */}
-      <div className="pb-4 border-b border-gray-200">
+      <div className="pb-4 border-b border-gray-200 flex items-center justify-between">
         <h2 className="text-xl font-semibold">{ticket.ticketName}</h2>
-        <span className="text-xs text-gray-400">
-          {new Date(ticket.updatedAt).toLocaleString()}
+        <span className="text-xs text-gray-400 pr-4">
+        {format(new Date(ticket.updatedAt), "yyyy-MM-dd HH:mm")}
         </span>
       </div>
 
