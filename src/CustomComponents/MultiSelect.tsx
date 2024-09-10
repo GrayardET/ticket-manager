@@ -20,8 +20,12 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (selectRef.current && !selectRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selectRef.current &&
+        event.target instanceof Node &&
+        !selectRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
