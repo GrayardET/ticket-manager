@@ -16,7 +16,6 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
     return <div>{error}</div>;
   }
 
-  // Delete subtickets (subtasks)
   const handleSubticketsDelete = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/api/tickets/${id}`);
@@ -56,11 +55,16 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
   };
 
   console.log("Ticket: ", ticket);
+  if (ticket.subtickets === null || ticket.subtickets === undefined || ticket.subtickets.length === 0){
+    return (
+      <div className="w-2/5 rounded-md shadow-sm bg-white flex justify-center items-center">No Subtask Found</div>
+    ) 
+  } 
 
   return (
-    <div className="w-1/2 rounded-md shadow-sm bg-white">
+    <div className="w-2/5 rounded-md shadow-sm bg-white">
       <div className="px-4 py-3 mb-3 border-b-[1.2px] border-gray-300 font-bold">
-        Subtasks
+         Subtasks
       </div>
       <div className="py-2 px-4">
         <div className="h-[6px] mb-2">

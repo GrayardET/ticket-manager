@@ -42,7 +42,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     100;
 
   return (
-    <div className="w-full h-full flex bg-gray-200 rounded-lg overflow-hidden">
+    <div className="w-full h-full flex bg-gray-200 rounded-sm overflow-hidden">
       <div
         className="bg-orange-400 h-full transition-all duration-500"
         style={{ width: `${pending}%` }}

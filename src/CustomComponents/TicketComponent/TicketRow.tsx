@@ -1,8 +1,8 @@
 // TicketRow.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Employee, Ticket } from "./TicketTable";
 import ProgressBar from "../ProgressBar";
+import { Employee, Ticket } from "./TicketTable";
 
 interface TicketRowProps {
   ticketId: string;
@@ -19,7 +19,7 @@ const TicketRow: React.FC<TicketRowProps> = ({
   ticketName,
   assignedTo,
   subtickets,
-  status
+  status,
 }) => {
   const navigate = useNavigate(); // Hook for navigation
 
