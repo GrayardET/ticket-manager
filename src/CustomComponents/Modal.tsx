@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlineClose } from "react-icons/ai";
-import { Employee } from "./TicketComponent/TicketTable";
+import { Employee, Ticket } from "./TicketComponent/TicketTable";
 const BACKEND_URL = import.meta.env.VITE_TASK_MANAGER_BACKEND_URL;
 interface ModalProps {
   disabled?: boolean;
@@ -26,6 +26,7 @@ interface FormData {
   assignedTo: string[];
   status: string;
   type: string;
+  parentTicket?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({ disabled }) => {
@@ -44,6 +45,7 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
   setValue("type", "Task");
 
   const [employees, setEmployees] = useState<Employee[]>([]); // State for storing employee data
+  const [tickets, setTickets] = useState<Ticket[]>([]); // State for storing ticket data
 
   console.log("Backend URL ", BACKEND_URL);
   useEffect(() => {
@@ -53,6 +55,10 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
         const response = await axios.get(`${BACKEND_URL}/api/employees`);
         console.log("Employees", response.data);
         setEmployees(response.data);
+
+        const ticketResponse = await axios.get(`${BACKEND_URL}/api/tickets`);
+        console.log("Tickets", ticketResponse.data);
+        setTickets(ticketResponse.data);
       } catch (error) {
         console.error("Failed to fetch employees", error);
       }
@@ -275,6 +281,27 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
                 {errors.type && (
                   <p className="text-red-500 text-sm">Type is required.</p>
                 )}
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-700">
+                  Parent Ticket
+                </label>
+                <Select
+                  onValueChange={(value) => setValue("parentTicket", value)}
+                  defaultValue="Task"
+                >
+                  <SelectTrigger className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    <SelectValue placeholder="N/A" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tickets.map((ticket) => (
+                      <SelectItem key={ticket._id} value={ticket._id}>
+                        {ticket.ticketNumber}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Submit Button */}
