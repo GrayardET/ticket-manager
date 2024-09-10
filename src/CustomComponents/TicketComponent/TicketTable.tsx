@@ -8,8 +8,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MultiSelect from "../MultiSelect"; // Import the MultiSelect component
 import TicketRow from "./TicketRow";
-import { useModalState } from "@/hooks/Store";
+import { useModalState } from "@/hooks/store";
 import { Button } from "@/components/ui/button";
+import { Comment } from "@/CustomComponents/TicketDetailPageComponent/CommentCard";
 
 export interface Employee {
   _id: string;
@@ -26,6 +27,10 @@ export interface Ticket {
   subtickets: Ticket[];
   assignedTo: Employee[];
   status: string;
+  author: Employee;
+  updatedAt: string;
+  comments: Comment[];
+  type: string;
 }
 
 const TicketTable: React.FC = () => {

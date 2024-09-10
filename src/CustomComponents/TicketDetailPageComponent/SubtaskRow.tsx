@@ -5,8 +5,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // Shadcn Select component
-import { TableCell, TableRow } from "@/components/ui/table"; // Shadcn TableRow and TableCell
+} from "@/components/ui/select"; //
+import { TableCell, TableRow } from "@/components/ui/table";
 import React from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { Ticket } from "../TicketComponent/TicketTable";

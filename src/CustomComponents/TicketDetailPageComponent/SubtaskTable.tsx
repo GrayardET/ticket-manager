@@ -55,39 +55,47 @@ const SubtaskTable: React.FC<SubtaskTableProps> = ({ ticket, setTicket }) => {
   };
 
   console.log("Ticket: ", ticket);
-  if (ticket.subtickets === null || ticket.subtickets === undefined || ticket.subtickets.length === 0){
+  if (
+    ticket.subtickets === null ||
+    ticket.subtickets === undefined ||
+    ticket.subtickets.length === 0
+  ) {
     return (
-      <div className="w-2/5 rounded-md shadow-sm bg-white flex justify-center items-center">No Subtask Found</div>
-    ) 
-  } 
+      <div className="w-2/5 rounded-md bg-white flex justify-center items-center">
+        No Subtask Found
+      </div>
+    );
+  }
 
   return (
-    <div className="w-2/5 rounded-md shadow-sm bg-white">
-      <div className="px-4 py-3 mb-3 border-b-[1.2px] border-gray-300 font-bold">
-         Subtasks
-      </div>
-      <div className="py-2 px-4">
-        <div className="h-[6px] mb-2">
-          {ticket && (
-            <ProgressBar
-              parentTicketStatus={ticket.status}
-              tickets={ticket.subtickets}
-            />
-          )}
+    <div className="w-2/5 rounded-md shadow-md bg-white">
+      <div className="p-4 px-6">
+        <div className="pt-1 py-3 mb-3 border-b-[1.2px] border-gray-200 font-bold text-l">
+          Subtasks
         </div>
-
-        <Table className="border-collapse w-full">
-          <TableBody>
-            {ticket?.subtickets.map((subtask) => (
-              <SubtaskRow
-                key={subtask._id}
-                subtask={subtask}
-                onDelete={handleSubticketsDelete}
-                onStatusChange={handleStatusChange}
+        <div className="py-2">
+          <div className="h-[6px] mb-2">
+            {ticket && (
+              <ProgressBar
+                parentTicketStatus={ticket.status}
+                tickets={ticket.subtickets}
               />
-            ))}
-          </TableBody>
-        </Table>
+            )}
+          </div>
+
+          <Table className="border-collapse w-full">
+            <TableBody>
+              {ticket?.subtickets.map((subtask) => (
+                <SubtaskRow
+                  key={subtask._id}
+                  subtask={subtask}
+                  onDelete={handleSubticketsDelete}
+                  onStatusChange={handleStatusChange}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

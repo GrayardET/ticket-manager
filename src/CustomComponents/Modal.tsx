@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"; // Shadcn Select
 import { Textarea } from "@/components/ui/textarea"; // Shadcn Textarea
-import { useModalState } from "@/hooks/Store";
+import { useModalState } from "@/hooks/store";
 import axios from "axios"; // For fetching employees
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -61,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({ disabled }) => {
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+
     try {
       await axios.post("http://localhost:3000/api/tickets", data);
       toggleModal();
